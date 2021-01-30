@@ -2,19 +2,37 @@
  * @Author: KeMull
  * @Date: 2021-01-27 14:35:28
  * @LastEditors: KeMull
- * @LastEditTime: 2021-01-27 17:43:46
+ * @LastEditTime: 2021-01-29 17:53:29
 -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <div>
-    
-  </div>
-  <!-- <img src="./assets/images/guide.png" alt=""> -->
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+	</head>
+	<body>
+		<input id="handleInput" type="text" />
+    <div></div>
+    <div class="aewqeq"></div>
+    <div class="aewqeq"></div>
+    <div class="aewqeq"></div>
+    <div class="aewqeq"></div>
+    <div class="aewqeq"></div>
+		<!-- <img src="./assets/images/guide.png" alt=""> -->
+	</body>
+	<script>
+		document.getElementById('handleInput').addEventListener('input', (e) => {
+      console.log('%c 🦀 	e.target.value: ', 'font-size:20px;background-color: #B03734;color:#fff;', 	e.target.value);
+      e.target.value = e.target.value
+				.replace(/[^0-9.]/g, '')
+				.replace(/^0[0-9]/g, '0')
+				.replace(/^\./g, '')
+				.replace(/\.{2,}/g, '.')
+				.replace('.', '$#$')
+				.replace(/\./g, '')
+				.replace('$#$', '.')
+				.replace(/^(-)*(\d+)\.(\d\d).*$/, '$1$2.$3')
+		})
+	</script>
 </html>
