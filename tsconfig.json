@@ -4,12 +4,12 @@
 
 		/* Basic Options */
 		// "incremental": true,                   /* Enable incremental compilation */
-		"target": "ESNext" /* 编译的目标是什么版本的 */,;
-		"module": "ESNext" /* 指定生成哪个模块系统代码 */,;
-		"lib": ["ESNext", "DOM"] /* 编译过程中需要引入的库文件的列表 */,;
+		"target": "ESNext" /* 编译的目标是什么版本的 */,
+		"module": "ESNext" /* 指定生成哪个模块系统代码 */,
+		"lib": ["ESNext", "DOM"] /* 编译过程中需要引入的库文件的列表 */,
 		"allowJs": true, // 允许编译javascript文件。;
 		// "checkJs": true /* 检查js */,;
-		"jsx": "react" /* 在 .tsx文件里支持JSX */,;
+		"jsx": "react" /* 在 .tsx文件里支持JSX */,
 		// "declaration": true /* ;Generates corresponding '.d.ts' file. */,
 		// "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
 		"sourceMap": true /* G;enerates corresponding '.map' file.  生成对应的map文件 */,
@@ -22,65 +22,29 @@
   	// "noEmit": true,                        /* Do not emit outputs. */
   	// "importHelpers": true,                 /* Import emit helpers from 'tslib'. */
     // "downlevelIteration": true,            /* Provide full support for iterables in 'for-of', spread, and destructuring when targeting 'ES5' or 'ES3'. */
-      / "isolatedModules": true,               /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
-        
-         Strict Type-Checking Options */
-          rict": true /* Enable all strict type-checking options. */,
-          ImplicitAny": true /* 不允许隐式 any */,
-          "strictNullChecks": true,              /* Enable strict null checks. */
-          "strictFunctionTypes": true,           /* Enable strict checking of function types. */
-          "strictBindCallApply": true,           /* Enable strict 'bind', 'call', and 'apply' methods on functions. */
-          "strictPropertyInitialization": true,  /* Enable strict checking of property initialization in classes. */
-          "noImplicitThis": true,                /* Raise error on 'this' expressions with an implied 'any' type. */
-          "alwaysStrict": true,                  /* Parse in strict mode and emit "use strict" for each source file. */
-          
-          Additional Checks */
-          "noUnusedLocals": true /* Report errors on unused locals. */,
-          "noUnusedParameters": true /* Report errors on unused parameters. */,
-          ImplicitReturns": true /* 函数所有路径都必须有显示 return */,
-          "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
-            
-            odule Resolution Options */
-              leResolution": "node" /* 指定模块解析方式，["classic" : "node"] */,
-            eUrl": "." /* Base directory to resolve non-absolute module names. */,
-          ths": {
-          /*": ["./src/*", "./typings/*"]
-             A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */,
-          "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
-          "typeRoots": [],                       /* List of folders to include type definitions from. */
-            types": [
-            "node"
-             /* Type declaration files to be included in compilation. */,
-            owSyntheticDefaultImports": true /* 允许引入没有默认导出的模块 */,
-              duleInterop": true /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
-                eserveSymlinks": true,              /* Do not resolve the real path of symlinks. */
-              llowUmdGlobalAccess": true,          /* Allow accessing UMD globals from modules. */
-            
-          Source Map Options */
-         "sourceRoot": "",                      /* Specify the location where debugger should locate TypeScript files instead of source locations. */
-      / "mapRoot": "",                         /* Specify the location where debugger should locate map files instead of generated locations. */
-      / "inlineSourceMap": true,               /* Emit a single file with source maps instead of having a separate file. */
-         "inlineSources": true,                 /* Emit the source alongside the sourcemaps within a single file; requires '--inlineSourceMap' or '--sourceMap' to be set. */
-        
-      * Experimental Options */
-      experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
-        mitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
-        
-         Advanced Options */
-        kipLibCheck": true /* Skip type checking of declaration files. */,
-          rceConsistentCasingInFileNames": true /* 不允许不同变量来代表同一文件 */
-        
-      xclude": [
-      node_modules",
-		"dist",
-		"scripts",
-		"acceptance-tests",
-		"webpack",
-      jest",
-        rc/setupTests.ts",
-        slint:latest",
-        slint-config-prettier"
-        
-          lude": ["./src/**/*"]
+    "isolatedModules": true,               /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
+    "strict": true ,
+   
+    "moduleResolution":"Node",
+          "paths": {
+          // ": ["./src/*", "./typings/*"]
+          },
+  "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
+		"emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
+
+		/* Advanced Options */
+		"skipLibCheck": true /* Skip type checking of declaration files. */,
+		"forceConsistentCasingInFileNames": true 
+     
+          // lude": ["./src/**/*"]
+        },
+          "exclude":[
+      "node_modules",
+		  "dist",
+		  "scripts",
+		  "acceptance-tests",
+		  "webpack",
+      ],
+      }
         
                                                                                                                                                             ;
