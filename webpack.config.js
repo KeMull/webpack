@@ -2,22 +2,24 @@
  * @Author: KeMull
  * @Date: 2021-01-30 11:41:03
  * @LastEditors: KeMull
- * @LastEditTime: 2021-02-02 17:58:14
+ * @LastEditTime: 2021-02-02 20:33:55
  */
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 不能和style-loader一起使用  会出错
-const { HotModuleReplacementPlugin } = require('webpack')
+const { HotModuleReplacementPlugin, DefinePlugin } = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const path = require('path')
 
 const { resolve } = path
+const { PORT, VERSION_CODE } = process.env
+
 module.exports = {
 	entry: ['./src/index.tsx'],
 	output: {
 		path: resolve(__dirname, './dist'),
-		filename: '[name]_[hash:8].js',
+		filename: `[name]_[hash:8]_${VERSION_CODE}.js`,
 	},
 	// loader配置
 	module: {
@@ -92,8 +94,8 @@ module.exports = {
 		new HtmlWebpackPlugin({ template: './src/index.html' }),
 		new MiniCssExtractPlugin({
 			// css分离插件
-			filename: 'css/[name]_[hash:8].css',
-			chunkFilename: 'css/[name].[contenthash:8].chunk.css',
+			filename: `css/[name]_[hash:8]_${VERSION_CODE}.css`,
+			chunkFilename: `css/[name].[contenthash:8]_${VERSION_CODE}.chunk.css`,
 		}),
 		new HotModuleReplacementPlugin(), // 热更新插件 webpack插件集成 配合 devServer的hot一起使用
 		new CleanWebpackPlugin(),
@@ -103,6 +105,11 @@ module.exports = {
 		}),
 		// 压缩css
 		new OptimizeCssAssetsWebpackPlugin(),
+		new DefinePlugin({
+			'process.env.VERSION_CODE': JSON.stringify(process.env.VERSION_CODE),
+			// 'process.env.MY_PROT': JSON.stringify(process.env.MY_PROT),
+			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+		}),
 	],
 	resolve: {
 		// 定义别名
@@ -117,7 +124,7 @@ module.exports = {
 	devServer: {
 		contentBase: resolve(__dirname, 'dist'), // 运行的文件目录
 		compress: true, // 优化压缩
-		port: 8743,
+		port: Number(PORT) | 8743,
 		open: true,
 		hot: true, // 开启热更新
 	},
