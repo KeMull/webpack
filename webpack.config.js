@@ -2,7 +2,7 @@
  * @Author: KeMull
  * @Date: 2021-01-30 11:41:03
  * @LastEditors: KeMull
- * @LastEditTime: 2021-02-02 20:33:55
+ * @LastEditTime: 2021-02-02 21:00:25
  */
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 不能和style-loader一起使用  会出错
@@ -109,6 +109,7 @@ module.exports = {
 			'process.env.VERSION_CODE': JSON.stringify(process.env.VERSION_CODE),
 			// 'process.env.MY_PROT': JSON.stringify(process.env.MY_PROT),
 			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+			'process.env.MY_NODE_ENV': JSON.stringify(process.env.MY_NODE_ENV),
 		}),
 	],
 	resolve: {

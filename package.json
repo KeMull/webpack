@@ -52,6 +52,7 @@
 	"scripts": {
 		"build-dev": "cross-env NODE_ENV=production PORT=9528 VERSION_CODE=3.1.0 webpack",
 		"dev": "cross-env NODE_ENV=development PORT=9527 VERSION_CODE=3.1.0 webpack-dev-server --mode=development",
+		"test": "cross-env MY_NODE_ENV=test PORT=9521 VERSION_CODE=3.1.0 webpack-dev-server --mode=development",
 		"analyz": "webpack-bundle-analyzer ./dist/stats.json"
 	},
 	"browserslist": {
