@@ -2,7 +2,7 @@
  * @Author: KeMull
  * @Date: 2021-01-30 11:41:03
  * @LastEditors: KeMull
- * @LastEditTime: 2021-02-03 15:13:36
+ * @LastEditTime: 2021-02-03 17:27:55
  */
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 不能和style-loader一起使用  会出错
@@ -16,7 +16,7 @@ process.env.VERSION_CODE = '0.0.1'
 const { resolve } = path
 const { PORT, NODE_ENV, VERSION_CODE } = process.env
 module.exports = {
-	entry: ['./src/index.tsx'],
+	entry: ['./src/index.tsx', './src/index.html'],
 	output: {
 		path: resolve(__dirname, './dist'),
 		filename: `[name]_[hash:8]_${VERSION_CODE}.js`,
@@ -160,6 +160,14 @@ module.exports = {
 		open: true,
 		hot: true, // 开启热更新
 	},
+	devtool: 'source-map',
+	/**
+	 * @name: source-map
+	 * 一种提供源代码到构建后代码映射技术 (如果构建后代码出错了,通过映射可以追踪到代码错误的源代码位置)
+	 * [inline-|hidden-|eval-|nosources-|cheap-|cheap-module-]source-map
+	 * hidden-|nosources-|cheap-|cheap-module-|source-map : 生成外部文件
+	 * inline-|eval- : 生成内联文件
+	 */
 	// 开发环境
 	// production
 	mode: NODE_ENV ? NODE_ENV : 'development',

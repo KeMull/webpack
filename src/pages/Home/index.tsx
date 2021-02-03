@@ -2,13 +2,14 @@
  * @Author: KeMull
  * @Date: 2021-02-01 14:17:15
  * @LastEditors: KeMull
- * @LastEditTime: 2021-02-03 15:14:20
+ * @LastEditTime: 2021-02-03 17:19:18
  */
 import React from 'react'
 import './index.less'
 import pros1 from '@/assets/images/pros_1.jpg'
 import pros2 from '@/assets/images/pros_2.jpg'
 import cowrs from '@/assets/images/cowrs.gif'
+import {} from '@/assets/common/common'
 const Home: React.FC<{}> = () => {
 	const handlePromise = () => {
 		return new Promise((resolve, reject) => {
@@ -26,6 +27,7 @@ const Home: React.FC<{}> = () => {
 			}
 		})
 	}
+	console.log('home')
 	return (
 		<>
 			<h1>Home</h1>
