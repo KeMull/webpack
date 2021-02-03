@@ -2,7 +2,7 @@
  * @Author: KeMull
  * @Date: 2021-01-30 11:41:03
  * @LastEditors: KeMull
- * @LastEditTime: 2021-02-03 11:48:49
+ * @LastEditTime: 2021-02-03 15:13:36
  */
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 不能和style-loader一起使用  会出错
@@ -77,6 +77,27 @@ module.exports = {
 				exclude: /node_modules/,
 				loader: 'babel-loader',
 			},
+			{
+				test: /\.(png|jpg|gif)$/,
+				loader: 'url-loader',
+				options: {
+					limit: 8 * 1024,
+					name: `[name]_[hash:8]_${VERSION_CODE}.[ext]`,
+					outputPath: 'static/imgs',
+					esModule: false,
+				},
+			},
+			{
+				test: /\.html$/,
+				loader: 'html-loader',
+			},
+			{
+				exclude: /\.(html|js|ts|tsx|css|less|jpg|png|gif)$/,
+				loader: 'file-loader',
+				options: {
+					outputPath: 'static/media',
+				},
+			},
 			/*
         语法检查: eslint-loader eslint
             注意: 只检查源代码,第三方库不检查
@@ -95,11 +116,19 @@ module.exports = {
 	},
 	// 插件配置
 	plugins: [
-		new HtmlWebpackPlugin({ template: './src/index.html' }),
+		new HtmlWebpackPlugin({
+			template: './src/index.html',
+			minify: {
+				// 移除空格
+				collapseWhitespace: true,
+				// 移除注释
+				removeComments: true,
+			},
+		}),
 		new MiniCssExtractPlugin({
 			// css分离插件
-			filename: `css/[name]_[hash:8]_${VERSION_CODE}.css`,
-			chunkFilename: `css/[name].[contenthash:8]_${VERSION_CODE}.chunk.css`,
+			filename: `static/css/[name]_[hash:8]_${VERSION_CODE}.css`,
+			chunkFilename: `static/css/[name].[contenthash:8]_${VERSION_CODE}.chunk.css`,
 		}),
 		new HotModuleReplacementPlugin(), // 热更新插件 webpack插件集成 配合 devServer的hot一起使用
 		new CleanWebpackPlugin(),
@@ -115,7 +144,7 @@ module.exports = {
 		}),
 	],
 	resolve: {
-		// 定义别名
+		// 定义别名 在对应的t/jsconfig.json的paths里面去配置
 		alias: {
 			'@': path.resolve(__dirname, 'src'),
 			'~': path.resolve(__dirname, 'node_modules'),

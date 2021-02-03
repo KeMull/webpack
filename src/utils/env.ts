@@ -2,13 +2,7 @@
  * @Author: KeMull
  * @Date: 2021-02-02 20:59:33
  * @LastEditors: KeMull
- * @LastEditTime: 2021-02-02 20:59:52
- */
-/*
- * @Author: 陈小豆
- * @Date: 2020-04-24 10:05:23
- * @LastEditors: 陈小豆
- * @LastEditTime: 2021-01-05 14:01:57
+ * @LastEditTime: 2021-02-03 11:51:35
  */
 export interface Env {
 	employeeUrl: string
@@ -24,7 +18,7 @@ export interface Env {
 	domainV: string
 	upyunApi: string
 }
-
+const { MY_NODE_ENV } = process.env
 let apiUrl = 'https://ceduv2.langpedu.com'
 let manageUrl = 'https://beduv2.langpedu.com'
 let employeeUrl = 'https://learnv2.langpedu.com'
@@ -41,7 +35,7 @@ let usernameV = 'preccdl'
 let passwordV = 'mwsSYUmU3iLOqlPw0W1TglY43dZWL99n'
 let domainV = 'cc-dl.langpedu.com'
 
-if (process.env.MY_NODE_ENV === 'test') {
+if (MY_NODE_ENV === 'test') {
 	apiUrl = 'https://cedu.test.langpedu.com'
 	manageUrl = 'https://bedu.test.langpedu.com'
 	employeeUrl = 'https://learn.test.langpedu.com'
@@ -56,7 +50,7 @@ if (process.env.MY_NODE_ENV === 'test') {
 	usernameV = 'preccdl'
 	passwordV = 'mwsSYUmU3iLOqlPw0W1TglY43dZWL99n'
 	domainV = 'cc-dl.langpedu.com'
-} else if (process.env.MY_NODE_ENV === 'master') {
+} else if (MY_NODE_ENV === 'master') {
 	apiUrl = 'https://cedu.51jiaoyujia.com'
 	manageUrl = 'https://bedu.51jiaoyujia.com'
 	employeeUrl = 'https://learn.51jiaoyujia.com'
@@ -72,7 +66,7 @@ if (process.env.MY_NODE_ENV === 'test') {
 	usernameV = 'companycollegedl'
 	passwordV = 'k4H7Xv9xSwKLKRZXj5zC9e71sHH4MXki'
 	domainV = 'companycollege-dl.51jiaoyujia.com'
-} else if (process.env.MY_NODE_ENV === 'pre') {
+} else if (MY_NODE_ENV === 'pre') {
 	apiUrl = 'https://cedu.pre.langpedu.com'
 	manageUrl = 'https://bedu.pre.langpedu.com'
 	employeeUrl = 'https://learn.pre.langpedu.com'

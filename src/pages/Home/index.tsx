@@ -2,10 +2,13 @@
  * @Author: KeMull
  * @Date: 2021-02-01 14:17:15
  * @LastEditors: KeMull
- * @LastEditTime: 2021-02-03 10:10:41
+ * @LastEditTime: 2021-02-03 15:14:20
  */
 import React from 'react'
 import './index.less'
+import pros1 from '@/assets/images/pros_1.jpg'
+import pros2 from '@/assets/images/pros_2.jpg'
+import cowrs from '@/assets/images/cowrs.gif'
 const Home: React.FC<{}> = () => {
 	const handlePromise = () => {
 		return new Promise((resolve, reject) => {
@@ -27,6 +30,9 @@ const Home: React.FC<{}> = () => {
 		<>
 			<h1>Home</h1>
 			<div className="home_warp">sdnandka</div>
+			<img src={pros2} alt="" />
+			<img src={cowrs} alt="" />
+			<img src={pros1} alt="" />
 			<button
 				onClick={() => {
 					handlePromise().then((res) => {
