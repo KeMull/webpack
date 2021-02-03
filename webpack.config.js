@@ -2,7 +2,7 @@
  * @Author: KeMull
  * @Date: 2021-01-30 11:41:03
  * @LastEditors: KeMull
- * @LastEditTime: 2021-02-03 10:57:49
+ * @LastEditTime: 2021-02-03 11:48:49
  */
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 不能和style-loader一起使用  会出错
@@ -12,9 +12,9 @@ const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const path = require('path')
 
+process.env.VERSION_CODE = '0.0.1'
 const { resolve } = path
-const { PORT, VERSION_CODE } = process.env
-
+const { PORT, NODE_ENV, VERSION_CODE } = process.env
 module.exports = {
 	entry: ['./src/index.tsx'],
 	output: {
@@ -110,8 +110,6 @@ module.exports = {
 		// 压缩css
 		new OptimizeCssAssetsWebpackPlugin(),
 		new DefinePlugin({
-			'process.env.VERSION_CODE': JSON.stringify(process.env.VERSION_CODE),
-			// 'process.env.MY_PROT': JSON.stringify(process.env.MY_PROT),
 			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
 			'process.env.MY_NODE_ENV': JSON.stringify(process.env.MY_NODE_ENV),
 		}),
@@ -129,10 +127,11 @@ module.exports = {
 	devServer: {
 		contentBase: resolve(__dirname, 'dist'), // 运行的文件目录
 		compress: true, // 优化压缩
-		port: Number(PORT) | 8743,
+		port: Number(PORT) | 9522,
 		open: true,
 		hot: true, // 开启热更新
 	},
 	// 开发环境
-	mode: 'development',
+	// production
+	mode: NODE_ENV ? NODE_ENV : 'development',
 }

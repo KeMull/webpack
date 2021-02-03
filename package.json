@@ -48,10 +48,17 @@
 		"webpack-dev-server": "^3.11.2"
 	},
 	"scripts": {
-		"build-dev": "cross-env NODE_ENV=production PORT=9528 VERSION_CODE=3.1.0 webpack",
-		"dev": "cross-env NODE_ENV=development PORT=9527 VERSION_CODE=3.1.0 webpack-dev-server --mode=development",
-		"test": "cross-env MY_NODE_ENV=test PORT=9521 VERSION_CODE=3.1.0 webpack-dev-server --mode=development",
-		"analyz": "webpack-bundle-analyzer ./dist/stats.json"
+		"analyz": "webpack-bundle-analyzer ./dist/stats.json",
+		"dev": "cross-env       MY_NODE_ENV=development  webpack-dev-server",
+		"test-v1": "cross-env   MY_NODE_ENV=testV1  PORT=9521  webpack-dev-server",
+		"test-v2": "cross-env   MY_NODE_ENV=testV2  webpack-dev-server",
+		"pre": "cross-env       MY_NODE_ENV=pre  webpack-dev-server",
+		"master": "cross-env    MY_NODE_ENV=master  webpack-dev-server",
+		"build-dev": "cross-env       NODE_ENV=production  MY_NODE_ENV=development  webpack",
+		"build-test_v1": "cross-env   NODE_ENV=production  MY_NODE_ENV=test  webpack",
+		"build-test_v2": "cross-env   NODE_ENV=production  MY_NODE_ENV=test  webpack",
+		"build-pre": "cross-env       NODE_ENV=production  MY_NODE_ENV=pre  webpack",
+		"build-master": "cross-env    NODE_ENV=production  MY_NODE_ENV=master  webpack"
 	},
 	"browserslist": {
 		"development": [
