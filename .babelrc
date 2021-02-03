@@ -1,8 +1,27 @@
 {
+	// 预设: 指示babel做什么样的兼容性处理
 	"presets": [
 		"@babel/preset-react",
-		"@babel/preset-env",
-		"@babel/preset-typescript"
+		"@babel/preset-typescript",
+		[
+			"@babel/preset-env",
+			{
+				// 按需加载
+				"useBuiltIns": "usage",
+				"corejs": {
+					"version": 3 //指定core-js版本
+				},
+				"targets": {
+					//兼容的浏览器版本
+					"esmodules": true,
+					"chrome": "60",
+					"firefox": "60",
+					"ie": "9",
+					"safari": "10",
+					"edge": "17"
+				}
+			}
+		]
 	],
 	"plugins": []
 }

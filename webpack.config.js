@@ -2,7 +2,7 @@
  * @Author: KeMull
  * @Date: 2021-01-30 11:41:03
  * @LastEditors: KeMull
- * @LastEditTime: 2021-02-02 21:00:25
+ * @LastEditTime: 2021-02-03 10:57:49
  */
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 不能和style-loader一起使用  会出错
@@ -65,13 +65,17 @@ module.exports = {
 				test: /\.ts$/,
 				loader: 'ts-loader',
 			},
+			/**
+			 * @name: babel-loader/@babel/core js兼容性处理
+			 *        @babel/preset-env 基本js兼容性处理环境
+			 *        core-js 按需加载
+			 * @msg: @babel/preset-react/@babel/preset-typescript 处理react+ts
+			 *        加载 .babelrc文件里的配置
+			 */
 			{
 				test: /\.(js|tsx)$/,
 				exclude: /node_modules/,
 				loader: 'babel-loader',
-				options: {
-					presets: ['@babel/preset-react', '@babel/preset-env'],
-				},
 			},
 			/*
         语法检查: eslint-loader eslint
