@@ -10,15 +10,11 @@ import pros1 from '@/assets/images/pros_1.jpg'
 import pros2 from '@/assets/images/pros_2.jpg'
 import cowrs from '@/assets/images/cowrs.gif'
 import {} from '@/assets/common/common'
+import moment from 'moment'
 const Home: React.FC<{}> = () => {
 	const handlePromise = () => {
 		return new Promise((resolve, reject) => {
 			try {
-				console.log(
-					'%c 🍻 成功: ',
-					'font-size:20px;background-color: #4b4b4b;color:#fff;',
-					'成功'
-				)
 				setTimeout(() => {
 					resolve('成功')
 				}, 1000)
@@ -27,7 +23,13 @@ const Home: React.FC<{}> = () => {
 			}
 		})
 	}
-	console.log('home')
+
+	console.log(
+		'%c 🍦 🍝: ',
+		'font-size:20px;background-color: #42b983;color:#fff;',
+		'🍝'
+	)
+	console.log(moment().format('YYYY-MM-DD HH:mm:ss'))
 	return (
 		<>
 			<h1>Home</h1>

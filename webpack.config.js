@@ -12,91 +12,131 @@ const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const path = require('path')
 
+/*
+    缓存:
+      babel缓存
+        cacheDirectory:true
+        --> 让第二次打包构建速度更快
+      文件资源缓存:
+        hash: 每次webpack构建时会生成唯一的hash值
+        问题: 因为js/css打包时使用的同一个hash值
+              如果重新打包会导致缓存失败
+        chunkhash: 根据chunk生成的hash值,如果打包来源于一个chunk,那么hash值就是一样的
+          chunk: 当前某一个文件的所有引入关系就是同一个chunk
+          问题: css是在js中引入的,同属于一个chunk
+        contenthash: 根据文件的内容生成的hash,不同的文件的hash值是不一样的
+        --> 让代码上线运行缓存更好使用
+*/
+
+/*
+   优化:
+      tree shaking: 取出无用代码
+      前提: 1. 必须使用es6模块化  2. 开启production环境
+      作用: 减少代码的体积
+
+    在package.json中的配置
+    "sideEffects":false 所有代码都没有副作用( 都可以进行tree shaking )
+*/
 process.env.VERSION_CODE = '0.0.1'
 const { resolve } = path
 const { PORT, NODE_ENV, VERSION_CODE } = process.env
 module.exports = {
-	entry: ['./src/index.tsx', './src/index.html'],
+	entry: './src/index.tsx', //单入口
+	// entry: { index: './src/index.tsx', about: './src/about.tsx' }, //多入口
 	output: {
 		path: resolve(__dirname, './dist'),
-		filename: `[name]_[hash:8]_${VERSION_CODE}.js`,
+		filename: `static/js/[name]_[hash:8]_${VERSION_CODE}.js`,
 	},
 	// loader配置
 	module: {
 		rules: [
+			// oneOf 以下loader只会匹配一个
+			// 注意: 不能有两个配置处理同一种类型的文件
 			{
-				test: /\.(c|le)ss$/,
-				use: [
-					MiniCssExtractPlugin.loader,
-					// 'css-modules-typescript-loader',
-					// {
-					// 	loader: 'typings-for-css-modules-loader',
-					// 	options: {
-					// 		modules: true,
-					// 		namedExport: true,
-					// 		camelCase: true,
-					// 		minimize: true,
-					// 		localIdentName: '[local]_[hash:base64:5]',
-					// 	},
-					// },
-					// 'style-loader',
+				oneOf: [
 					{
-						loader: 'css-loader',
+						test: /\.(c|le)ss$/,
+						use: [
+							MiniCssExtractPlugin.loader,
+							// 'css-modules-typescript-loader',
+							// {
+							// 	loader: 'typings-for-css-modules-loader',
+							// 	options: {
+							// 		modules: true,
+							// 		namedExport: true,
+							// 		camelCase: true,
+							// 		minimize: true,
+							// 		localIdentName: '[local]_[hash:base64:5]',
+							// 	},
+							// },
+							// 'style-loader',
+							{
+								loader: 'css-loader',
+								options: {
+									module: true,
+								},
+							},
+							{
+								loader: 'less-loader',
+							},
+							{
+								// css兼容loader  兼容各种版本浏览器打包之后会自动添加 css hack的前缀
+								// 需要在package.json文件配置 browserslist属性
+								loader: 'postcss-loader',
+								options: {
+									postcssOptions: {
+										plugins: ['postcss-preset-env'],
+									},
+								},
+							},
+						],
+					},
+					{
+						test: /\.ts$/,
+						exclude: /node_modules/,
+						loader: 'ts-loader',
+					},
+					/**
+					 * @name: babel-loader/@babel/core js兼容性处理
+					 *        @babel/preset-env 基本js兼容性处理环境
+					 *        core-js 按需加载
+					 * @msg: @babel/preset-react/@babel/preset-typescript 处理react+ts
+					 *        加载 .babelrc文件里的配置
+					 */
+					{
+						test: /\.(js|tsx)$/,
+						exclude: /node_modules/,
+						// 优先执行 两种配置处理同一种类型的文件
+						// enforce:'pre',
+						loader: 'babel-loader',
 						options: {
-							module: true,
+							// 开启babel缓存
+							// 第二次构建时,会读取之前的缓存
+							cacheDirectory: true,
 						},
 					},
 					{
-						loader: 'less-loader',
+						test: /\.(png|jpg|gif)$/,
+						loader: 'url-loader',
+						options: {
+							limit: 8 * 1024,
+							name: `[name]_[hash:8]_${VERSION_CODE}.[ext]`,
+							outputPath: 'static/imgs',
+							esModule: false,
+						},
 					},
 					{
-						// css兼容loader  兼容各种版本浏览器打包之后会自动添加 css hack的前缀
-						// 需要在package.json文件配置 browserslist属性
-						loader: 'postcss-loader',
+						test: /\.html$/,
+						loader: 'html-loader',
+					},
+					{
+						exclude: /\.(html|js|ts|tsx|css|less|jpg|png|gif)$/,
+						loader: 'file-loader',
 						options: {
-							postcssOptions: {
-								plugins: ['postcss-preset-env'],
-							},
+							outputPath: 'static/media',
 						},
 					},
 				],
-			},
-			{
-				test: /\.ts$/,
-				loader: 'ts-loader',
-			},
-			/**
-			 * @name: babel-loader/@babel/core js兼容性处理
-			 *        @babel/preset-env 基本js兼容性处理环境
-			 *        core-js 按需加载
-			 * @msg: @babel/preset-react/@babel/preset-typescript 处理react+ts
-			 *        加载 .babelrc文件里的配置
-			 */
-			{
-				test: /\.(js|tsx)$/,
-				exclude: /node_modules/,
-				loader: 'babel-loader',
-			},
-			{
-				test: /\.(png|jpg|gif)$/,
-				loader: 'url-loader',
-				options: {
-					limit: 8 * 1024,
-					name: `[name]_[hash:8]_${VERSION_CODE}.[ext]`,
-					outputPath: 'static/imgs',
-					esModule: false,
-				},
-			},
-			{
-				test: /\.html$/,
-				loader: 'html-loader',
-			},
-			{
-				exclude: /\.(html|js|ts|tsx|css|less|jpg|png|gif)$/,
-				loader: 'file-loader',
-				options: {
-					outputPath: 'static/media',
-				},
 			},
 			/*
         语法检查: eslint-loader eslint
@@ -128,7 +168,7 @@ module.exports = {
 		new MiniCssExtractPlugin({
 			// css分离插件
 			filename: `static/css/[name]_[hash:8]_${VERSION_CODE}.css`,
-			chunkFilename: `static/css/[name].[contenthash:8]_${VERSION_CODE}.chunk.css`,
+			chunkFilename: `static/css/[name].[chunkhash:8]_${VERSION_CODE}.chunk.css`,
 		}),
 		new HotModuleReplacementPlugin(), // 热更新插件 webpack插件集成 配合 devServer的hot一起使用
 		new CleanWebpackPlugin(),
@@ -151,6 +191,16 @@ module.exports = {
 		},
 		// 当你加载一个文件的时候,没有指定扩展名的时候，会自动寻找这些扩展名
 		extensions: ['.ts', '.tsx', '.js', '.json'],
+	},
+	/*  
+      代码分割
+      1. 可以将node-modules中的代码单独打包成一个chunk
+      2. 自动化分析多入口chunk中,有没有引入公共文件/node_modules,如果有打包成一个单独的文件
+  */
+	optimization: {
+		splitChunks: {
+			chunks: 'all',
+		},
 	},
 	// 开发服务器
 	devServer: {
