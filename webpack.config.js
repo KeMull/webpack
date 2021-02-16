@@ -6,10 +6,15 @@
  */
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 不能和style-loader一起使用  会出错
-const { HotModuleReplacementPlugin, DefinePlugin } = require('webpack')
+const {
+	HotModuleReplacementPlugin,
+	DefinePlugin,
+	DllReferencePlugin,
+} = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin')
 const path = require('path')
 
 /*
@@ -182,6 +187,13 @@ module.exports = {
 			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
 			'process.env.MY_NODE_ENV': JSON.stringify(process.env.MY_NODE_ENV),
 		}),
+		// 告诉webpack有哪些库不参与打包,同时使用时的名称也得改变
+		new DllReferencePlugin({
+			manifest: resolve(__dirname, 'dll/manifest.json'),
+		}),
+		new AddAssetHtmlWebpackPlugin({
+			filepath: resolve(__dirname, 'dll/moment.js'),
+		}),
 	],
 	resolve: {
 		// 定义别名 在对应的t/jsconfig.json的paths里面去配置
@@ -224,6 +236,6 @@ module.exports = {
 	// 忽略第三方包/库打包在本地  使用cdn引入 (要手动去引入)
 	externals: {
 		// jquery: 'jQuery',
-		moment: 'moment',
+		// moment: 'moment',
 	},
 }
