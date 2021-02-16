@@ -221,4 +221,9 @@ module.exports = {
 	// 开发环境
 	// production
 	mode: NODE_ENV ? NODE_ENV : 'development',
+	// 忽略第三方包/库打包在本地  使用cdn引入 (要手动去引入)
+	externals: {
+		// jquery: 'jQuery',
+		moment: 'moment',
+	},
 }
