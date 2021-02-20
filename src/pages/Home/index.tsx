@@ -5,13 +5,13 @@
  * @LastEditTime: 2021-02-03 17:19:18
  */
 import React, { useEffect } from 'react'
+import { Button } from 'antd'
 import pros1 from '@/assets/images/pros_1.jpg'
 import pros2 from '@/assets/images/pros_2.jpg'
 import cowrs from '@/assets/images/cowrs.gif'
 import {} from '@/assets/common/common'
 import { get, post } from '@/utils/request'
 import moment from 'moment'
-// const url: string = 'http://pv.sohu.com/cityjson?ie=utf-8'
 const Home: React.FC<{}> = () => {
 	useEffect(() => {
 		get('/api/dataApi', {
@@ -48,7 +48,7 @@ const Home: React.FC<{}> = () => {
 			<img src={pros2} alt="" />
 			<img src={cowrs} alt="" />
 			<img src={pros1} alt="" />
-			<button
+			<Button
 				onClick={() => {
 					handlePromise().then((res) => {
 						console.log(
@@ -60,7 +60,7 @@ const Home: React.FC<{}> = () => {
 				}}
 			>
 				点我
-			</button>
+			</Button>
 		</>
 	)
 }

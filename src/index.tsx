@@ -6,6 +6,7 @@
  */
 import ReactDOM from 'react-dom'
 import React from 'react'
-
 import Home from './pages/Home/index'
+import 'antd/dist/antd.css' // or 'antd/dist/antd.less'
+
 ReactDOM.render(<Home />, document.getElementById('root'))
