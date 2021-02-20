@@ -8,6 +8,7 @@ axios.defaults.baseURL = ENV.apiUrl
 axios.defaults.headers.post['Content-Type'] =
 	'application/x-www-form-urlencoded;charset=UTF-8' // post请求头
 
+const userip = localStorage.getItem('userip') || '127.0.0.1'
 /***
  * 请求拦截：就是所有的请求发送之前 会被拦截到 做一些处理 然后才去发送
  */
@@ -15,6 +16,7 @@ axios.interceptors.request.use((config: AxiosRequestConfig) => {
 	if (config.url && config.url.indexOf('/api') !== -1) {
 		config.baseURL = 'http://localhost:9522'
 	}
+	config.headers.userip = userip
 	// 取出本地的token 有就返回 token 没有就为空
 	// let token = local.get('t_k') || ''
 	// if (token) {

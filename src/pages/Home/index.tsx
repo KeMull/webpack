@@ -21,7 +21,10 @@ const Home: React.FC<{}> = () => {
 			num: 1,
 			query: 'ip',
 			url: 'ip',
-		}).then((res) => {
+		}).then((res: any) => {
+			if (res && res.ip) {
+				localStorage.setItem('userip', res.ip)
+			}
 			console.log(res)
 		})
 		post('college/study_manage/live_plan_list', {})
@@ -37,12 +40,6 @@ const Home: React.FC<{}> = () => {
 			}
 		})
 	}
-
-	console.log(
-		'%c 🍦 🍝: ',
-		'font-size:20px;background-color: #42b983;color:#fff;',
-		'🍝'
-	)
 	console.log(moment().format('YYYY-MM-DD HH:mm:ss'))
 	return (
 		<>
