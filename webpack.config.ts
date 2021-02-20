@@ -51,6 +51,12 @@ module.exports = {
 	output: {
 		path: resolve(__dirname, './dist'),
 		filename: `static/js/[name]_[hash:8]_${VERSION_CODE}.js`,
+		chunkFilename: `static/js/[name]_[chunkhash:8]_${VERSION_CODE}.js`,
+		// 打包后所有资源引入公共路劲的前缀 '/' --> 'imgs/1.png' --> '/imgs/1.png'
+		publicPath: '/',
+		// chunkFilename: 'js/[name]_chunk.js', 非入口chunk名称/重命名
+		// library:'[name]' 打包后整个js库向外暴露的变量名
+		// libraryTarget:'window | commonjs | amd' 打包后的库向外暴露的目标 添加到 window上还是遵循commonjs amd规范向外导出
 	},
 	// loader配置
 	module: {
@@ -111,8 +117,8 @@ module.exports = {
 					{
 						test: /\.(js|tsx)$/,
 						exclude: /node_modules/,
-						// 优先执行 两种配置处理同一种类型的文件
-						// enforce:'pre',
+						// 两种配置处理同一种类型的文件
+						// enforce:'pre', pre 优先执行   post 延后执行
 						loader: 'babel-loader',
 						options: {
 							// 开启babel缓存
@@ -196,13 +202,15 @@ module.exports = {
 		}),
 	],
 	resolve: {
-		// 定义别名 在对应的t/jsconfig.json的paths里面去配置
+		// 配置解析模块,定义别名 在对应的t/jsconfig.json的paths里面去配置
 		alias: {
 			'@': path.resolve(__dirname, 'src'),
 			'~': path.resolve(__dirname, 'node_modules'),
 		},
 		// 当你加载一个文件的时候,没有指定扩展名的时候，会自动寻找这些扩展名
-		extensions: ['.ts', '.tsx', '.js', '.json'],
+		extensions: ['.ts', '.tsx', '.js', '.json', '.less'],
+		// 告诉webpack解析模块是去哪个目录找  默认是就是 node_modules
+		modules: [resolve(__dirname, 'node_modules'), 'node_modules'],
 	},
 	/*  
       代码分割
@@ -217,10 +225,26 @@ module.exports = {
 	// 开发服务器
 	devServer: {
 		contentBase: resolve(__dirname, 'dist'), // 运行的文件目录
-		compress: true, // 优化压缩
+		compress: true, // 优化压缩 gzip压缩
 		port: Number(PORT) | 9522,
 		open: true,
 		hot: true, // 开启热更新
+		watchContentBase: true, //监视contentBase 目录下所有的文件,一旦文件发生变化就会reload
+		watchOptions: {
+			ignored: /node_modules/, //忽略文件
+		},
+		clientLogLevel: 'none', //不要显示启动服务器日志信息
+		quiet: true, //除了一些基本的启动信息以外,其他内容都不要显示
+		overlay: false, //如果出错了,不要全屏提示
+		proxy: {
+			'/api': {
+				target: 'https://open.onebox.so.com',
+				pathRewrite: {
+					'^/api': '',
+				},
+				changeOrigin: true,
+			},
+		},
 	},
 	devtool: 'source-map',
 	/**

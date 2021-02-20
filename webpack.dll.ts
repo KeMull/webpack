@@ -1,6 +1,6 @@
-const { resolve } = require('path')
 const { DllPlugin } = require('webpack')
-const { PORT, NODE_ENV, VERSION_CODE } = process.env
+// const { resolve } = require('path')
+// const { NODE_ENV } = process.env
 
 module.exports = {
 	entry: {
