@@ -63,7 +63,7 @@
 		"test-v2": "cross-env   MY_NODE_ENV=testV2  webpack-dev-server",
 		"pre": "cross-env       MY_NODE_ENV=pre  webpack-dev-server",
 		"master": "cross-env    MY_NODE_ENV=master  webpack-dev-server",
-		"dll": "cross-env       NODE_ENV=production webpack --config webpack.dll.js",
+		"dll": "cross-env       NODE_ENV=production webpack --config webpack.dll.ts",
 		"build-dev": "cross-env       NODE_ENV=production  MY_NODE_ENV=development  webpack",
 		"build-test_v1": "cross-env   NODE_ENV=production  MY_NODE_ENV=test  webpack",
 		"build-test_v2": "cross-env   NODE_ENV=production  MY_NODE_ENV=test  webpack",

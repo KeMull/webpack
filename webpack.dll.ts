@@ -1,10 +1,17 @@
+/*
+ * @Author: KeMull
+ * @Date: 2021-02-21 08:59:44
+ * @LastEditors: KeMull
+ * @LastEditTime: 2021-03-08 10:09:16
+ */
 const { DllPlugin } = require('webpack')
-// const { resolve } = require('path')
-// const { NODE_ENV } = process.env
+const { resolve } = require('path')
+const { NODE_ENV } = process.env
 
 module.exports = {
 	entry: {
 		moment: ['moment'],
+		antd: ['antd'],
 	},
 	output: {
 		filename: `[name].js`,

@@ -2,7 +2,7 @@
  * @Author: KeMull
  * @Date: 2021-01-30 11:41:03
  * @LastEditors: KeMull
- * @LastEditTime: 2021-02-03 17:27:55
+ * @LastEditTime: 2021-02-21 09:42:30
  */
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin') // 不能和style-loader一起使用  会出错
@@ -199,6 +199,9 @@ module.exports = {
 		}),
 		new AddAssetHtmlWebpackPlugin({
 			filepath: resolve(__dirname, 'dll/moment.js'),
+		}),
+		new AddAssetHtmlWebpackPlugin({
+			filepath: resolve(__dirname, 'dll/antd.js'),
 		}),
 	],
 	resolve: {
